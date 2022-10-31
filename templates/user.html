@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="app">
+    <li v-for="book in books" style="border:2px dotted black; margin:3px;">
+        [[ book.title ]]
+      </li>
+    <v-app>
+      <v-main>
+        <button  @click="fetchData" style="border:5px solid blue; margin:20px; text-align: center;"> Tytuły utworów Mickiewicza</button>
+      </v-main>
+    </v-app>
+  </div>
+{% endblock %}
+   
+{% block scripts %}  
+<script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      delimiters: ['[[', ']]'],
+      data () {
+        return {
+            items:[{ message: 'Foo' }, { message: 'Bar' }],
+            books:[],
+        }
+      },
+      methods:{
+        fetchData(){
+        fetch('https://wolnelektury.pl/api/authors/adam-mickiewicz/kinds/liryka/books/')
+        .then((response) => response.json())
+        .then((data) => this.books = data)
+        }
+      }
+      
+    })
+</script>
+{% endblock %}
