@@ -46,11 +46,11 @@ flask drop_db
 ```
 
 ## use db_commands
-check db
+```
 install sqlite extension in vsc
 use commnd palatte (ctrl + shift + p)
 type  >sqlite new_query
 seclet * from table_name
 run file ( ctrl + shtift + q)
-
+```
 
