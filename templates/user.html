@@ -2,12 +2,19 @@
 
 {% block content %}
 <div id="app">
-    <li v-for="book in books" style="border:2px dotted black; margin:3px;">
+    <!-- <li v-for="book in books" style="border:2px dotted black; margin:3px;">
         [[ book.title ]]
-      </li>
+      </li> -->
     <v-app>
       <v-main>
         <button  @click="fetchData" style="border:5px solid blue; margin:20px; text-align: center;"> Tytuły utworów Mickiewicza</button>
+        <v-data-table
+            v-if="books.length > 0"
+            :headers="headers"
+            :items="books"
+            :items-per-page="5"
+            class="elevation-1"
+        ></v-data-table>
       </v-main>
     </v-app>
   </div>
@@ -21,6 +28,16 @@
       delimiters: ['[[', ']]'],
       data () {
         return {
+            headers: [
+          {
+            text: 'Rodzaj literacki',
+            align: 'start',
+            sortable: false,
+            value: 'kind',
+          },
+          { text: 'Tytuł', value: 'title' },
+          { text: 'Autor', value: 'author' },
+        ],
             items:[{ message: 'Foo' }, { message: 'Bar' }],
             books:[],
         }
