@@ -5,9 +5,13 @@
     <!-- <li v-for="book in books" style="border:2px dotted black; margin:3px;">
         [[ book.title ]]
       </li> -->
+      autor jako lower kebab case np. adam-mickiewicz
     <v-app>
       <v-main>
-        <button  @click="fetchData" style="border:5px solid blue; margin:20px; text-align: center;"> Tytuły utworów Mickiewicza</button>
+
+        <input v-model="userInput" placeholder="wpisz autora" style="border:5px solid blue; margin:20px; text-align: center;">
+
+        <button  @click="fetchData" style="border:5px solid blue; margin:20px; text-align: center;"> Szukaj utworów [[ userInput ]]</button>
         <v-data-table
             v-if="books.length > 0"
             :headers="headers"
@@ -28,6 +32,7 @@
       delimiters: ['[[', ']]'],
       data () {
         return {
+          userInput: "",
             headers: [
           {
             text: 'Rodzaj literacki',
@@ -44,7 +49,8 @@
       },
       methods:{
         fetchData(){
-        fetch('https://wolnelektury.pl/api/authors/adam-mickiewicz/kinds/liryka/books/')
+        url = "https://wolnelektury.pl/api/authors/" + this.userInput + "/kinds/liryka/parent_books/"
+        fetch(url)
         .then((response) => response.json())
         .then((data) => this.books = data)
         }
