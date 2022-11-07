@@ -14,6 +14,7 @@ from flask import json, render_template
 def index():
     return render_template("base.html")
 
+
 @user_bp.route("/api")
 def simple_query():
     # https://flask-restless.readthedocs.io/en/stable/searchformat.html

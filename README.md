@@ -31,7 +31,7 @@ Active virtual environment in new terminal
 
 create db
 ```
-flask create_db
+flask db_create
 ```
 
 create example records(seed)
@@ -42,7 +42,7 @@ flask db_seed
 
 drop db
 ```
-flask drop_db
+flask db_drop
 ```
 
 ## use db_commands
@@ -50,7 +50,7 @@ flask drop_db
 install sqlite extension in vsc
 use commnd palatte (ctrl + shift + p)
 type  >sqlite new_query
-seclet * from table_name
+seclet * from planets
 run file ( ctrl + shtift + q)
 ```
 
