@@ -16,8 +16,16 @@ def index():
     return render_template("base.html")
 
 @user_bp.route("/api")
-def simple_query():
+def a():
     return WolneLekturyAPI.books_list
+
+@user_bp.route("/kinds")
+def b():
+    return WolneLekturyAPI.kinds_list
+
+@user_bp.route("/authors")
+def simple_query():
+    return WolneLekturyAPI.authors_list 
 
 @user_bp.route("/user")
 def user():

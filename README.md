@@ -17,7 +17,7 @@ Install application dependecies
 pip install -r requirements.txt
 ```
 
-## Run application in terminal 
+## Run application in terminal
 ```
 flask run
 ```
