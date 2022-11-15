@@ -13,14 +13,14 @@
       <v-main>
         <!-- <button  @click="fetchAuthors" style="border:5px solid blue; margin:20px; text-align: center;">AUTORZY</button> -->
         <v-select
-        :items="authorsSlug"
+        :items="authorsID"
         v-model = "selectedAuthor"
         label="Wybierz autora z listy wszystkich autorów"
         outlined
         class="m4"
         ></v-select>
         
-<!-- 
+      <!-- 
         <v-select
         v-if="selectedAuthor"
         :items="kinds"
@@ -53,7 +53,14 @@
                   :items-per-page="5"
                   :search="search"
                   class="elevation-1"
-              ></v-data-table>
+              >
+              <template #item.url="{ value }">
+                <a target="_blank" :href="value">
+                  {{ value }}
+                </a>
+            </template>
+    
+            </v-data-table>
           </v-card>
       </template>
       </v-main>
@@ -82,10 +89,9 @@
           { text: 'Tytuł', value: 'title' },
           { text: 'Autor', value: 'author' },
         ],
-            items:[{ message: 'Foo' }, { message: 'Bar' }],
             books:[],
             authorsName:[],
-            authorsSlug:[],
+            authorsID:[],
             selectedAuthor:"",
             kinds:[],
             selectedKind:""
@@ -110,28 +116,20 @@
         })
        
         .then((data) => this.books = data)
-        // .then(this.checkIfFoundedBooks())
-        .finally(this.loadingBooks=false)
+        .finally(this.loadingBooks=false, console.log(this.books))
         },
         fetchAuthors(){
         url = "/authors"
         fetch(url)
         .then((response) => response.json())
-        .then((data) => this.authorsName = data.map(({name})=>name, this.authorsSlug = data.map(({slug})=>slug)))
+        .then((data) => this.authorsName = data.map(({name})=>name, this.authorsID = data.map(({id})=>id)))
         },
         fetchKinds(){
         url = "/kinds"
         fetch(url)
         .then((response) => response.json())
-        .then((data) => this.kinds = data.map(({slug})=>slug))
+        .then((data) => this.kinds = data.map(({id})=>id))
         },
-        checkIfFoundedBooks(){
-          if(this.books){
-
-          }else{
-            console.log("Brak wyników")
-          }
-        }
 
       },
       
