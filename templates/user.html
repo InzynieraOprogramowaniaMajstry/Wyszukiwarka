@@ -5,20 +5,56 @@
     <!-- <li v-for="book in books" style="border:2px dotted black; margin:3px;">
         [[ book.title ]]
       </li> -->
-      autor jako lower kebab case np. adam-mickiewicz
+      <!-- autor jako lower kebab case np. adam-mickiewicz -->
+      <br>
+      
+      <br>
     <v-app>
       <v-main>
+        <!-- <button  @click="fetchAuthors" style="border:5px solid blue; margin:20px; text-align: center;">AUTORZY</button> -->
+        <v-select
+        :items="authorsSlug"
+        v-model = "selectedAuthor"
+        label="Wybierz autora z listy wszystkich autorów"
+        outlined
+        class="m4"
+        ></v-select>
 
-        <input v-model="userInput" placeholder="wpisz autora" style="border:5px solid blue; margin:20px; text-align: center;">
+        <!-- <v-select
+        v-if="selectedAuthor"
+        :items="kinds"
+        v-model = "selectedKind"
+        label="Wybierz rodzaj"
+        outlined
+        class="m4"
+        >
+      </v-select> -->
 
-        <button  @click="fetchData" style="border:5px solid blue; margin:20px; text-align: center;"> Szukaj utworów [[ userInput ]]</button>
-        <v-data-table
-            v-if="books.length > 0"
-            :headers="headers"
-            :items="books"
-            :items-per-page="5"
-            class="elevation-1"
-        ></v-data-table>
+        <!-- <input v-model="userInput" placeholder="wpisz autora" style="border:5px solid blue; margin:20px; text-align: center;"> -->
+
+        <v-btn  v-if="selectedAuthor" @click="fetchBooks" :loading="loadingBooks" rounded block > Szukaj książek [[ selectedAuthor ]] z gatunku [[ selectedKind ]] </v-btn>
+        <template  v-if="books.length > 0">
+            <v-card>
+              <v-card-title>
+                  <v-text-field
+                  
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+              </v-card-title>
+              <v-data-table
+                 
+                  :headers="headers"
+                  :items="books"
+                  :items-per-page="5"
+                  :search="search"
+                  class="elevation-1"
+              ></v-data-table>
+          </v-card>
+      </template>
       </v-main>
     </v-app>
   </div>
@@ -32,7 +68,9 @@
       delimiters: ['[[', ']]'],
       data () {
         return {
+          search: "",
           userInput: "",
+          loadingBooks:false,
             headers: [
           {
             text: 'Rodzaj literacki',
@@ -45,16 +83,57 @@
         ],
             items:[{ message: 'Foo' }, { message: 'Bar' }],
             books:[],
+            authorsName:[],
+            authorsSlug:[],
+            selectedAuthor:"",
+            kinds:[],
+            selectedKind:""
         }
       },
+      mounted:function(){
+        this.fetchAuthors() //method1 will execute at pageload
+        this.fetchKinds()
+      },
       methods:{
-        fetchData(){
-        url = "https://wolnelektury.pl/api/authors/" + this.userInput + "/kinds/liryka/parent_books/"
+        fetchBooks(){
+        this.loadingBooks = true
+        url = "https://wolnelektury.pl/api/authors/" + this.selectedAuthor + "/books/" 
+        fetch(url)
+        .then((response) => {
+          console.log(response.ok)
+          if (response.ok) {
+            return response.json();
+          }else{
+            console.log( "Przpau")
+          }
+        })
+       
+        .then((data) => this.books = data)
+        // .then(this.checkIfFoundedBooks())
+        .finally(this.loadingBooks=false)
+        },
+        fetchAuthors(){
+        url = "/authors"
         fetch(url)
         .then((response) => response.json())
-        .then((data) => this.books = data)
+        .then((data) => this.authorsName = data.map(({name})=>name, this.authorsSlug = data.map(({slug})=>slug)))
+        },
+        fetchKinds(){
+        url = "/kinds"
+        fetch(url)
+        .then((response) => response.json())
+        .then((data) => this.kinds = data.map(({slug})=>slug))
+        },
+        checkIfFoundedBooks(){
+          if(this.books){
+
+          }else{
+            console.log("Brak wyników")
+          }
         }
-      }
+
+      },
+      
       
     })
 </script>
