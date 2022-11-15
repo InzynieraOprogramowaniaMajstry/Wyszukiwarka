@@ -15,6 +15,11 @@ from flask import json, render_template
 def index():
     return render_template("base.html")
 
+@user_bp.route("/login")
+def login():
+    return render_template("login.html")
+
+
 @user_bp.route("/api")
 def a():
     return WolneLekturyAPI.books_list

@@ -19,12 +19,13 @@
         outlined
         class="m4"
         ></v-select>
-
-        <!-- <v-select
+        
+<!-- 
+        <v-select
         v-if="selectedAuthor"
         :items="kinds"
         v-model = "selectedKind"
-        label="Wybierz rodzaj"
+        label="Wybierz rodzaj literatury jeżeli chesz zawęzić wyszukiwanie"
         outlined
         class="m4"
         >
@@ -32,7 +33,7 @@
 
         <!-- <input v-model="userInput" placeholder="wpisz autora" style="border:5px solid blue; margin:20px; text-align: center;"> -->
 
-        <v-btn  v-if="selectedAuthor" @click="fetchBooks" :loading="loadingBooks" rounded block > Szukaj książek [[ selectedAuthor ]] z gatunku [[ selectedKind ]] </v-btn>
+        <v-btn  v-if="selectedAuthor" @click="fetchBooks" :loading="loadingBooks" rounded block > Szukaj książek [[ selectedAuthor ]] </v-btn>
         <template  v-if="books.length > 0">
             <v-card>
               <v-card-title>
