@@ -56,9 +56,9 @@
               >
               <template #item.url="{ value }">
                 <a target="_blank" :href="value">
-                  {{ value }}
+                  [[ value ]]
                 </a>
-            </template>
+              </template>
     
             </v-data-table>
           </v-card>
@@ -88,6 +88,7 @@
           },
           { text: 'Tytuł', value: 'title' },
           { text: 'Autor', value: 'author' },
+          { text: 'URL', value: 'url' },
         ],
             books:[],
             authorsName:[],
@@ -114,9 +115,8 @@
             console.log( "Przpau")
           }
         })
-       
         .then((data) => this.books = data)
-        .finally(this.loadingBooks=false, console.log(this.books))
+        .finally(this.loadingBooks=false)
         },
         fetchAuthors(){
         url = "/authors"
