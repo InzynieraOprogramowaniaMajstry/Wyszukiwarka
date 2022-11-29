@@ -20,6 +20,8 @@ class WolneLekturyAPI:
     @classmethod
     def get_kinds(cls):
         response = requests.get("https://wolnelektury.pl/api/kinds/")
+        if not response:
+            return
         json_response = response.json()
         for record in json_response:
             d = {'name': record['name'], 'id': record['slug']}
@@ -28,6 +30,8 @@ class WolneLekturyAPI:
     @classmethod
     def get_genres(cls):
         response = requests.get("https://wolnelektury.pl/api/genres/")
+        if not response:
+            return
         json_response = response.json()
         for record in json_response:
             d = {'name': record['name'], 'id': record['slug']}
@@ -36,6 +40,8 @@ class WolneLekturyAPI:
     @classmethod
     def get_epochs(cls):
         response = requests.get("https://wolnelektury.pl/api/epochs/")
+        if not response:
+            return
         json_response = response.json()
         for record in json_response:
             d = {'name': record['name'], 'id': record['slug']}
@@ -44,6 +50,8 @@ class WolneLekturyAPI:
     @classmethod
     def get_authors(cls):
         response = requests.get("https://wolnelektury.pl/api/authors/")
+        if not response:
+            return
         json_response = response.json()
         for record in json_response:
             d = {'name': record['name'], 'id': record['slug']}
@@ -52,6 +60,8 @@ class WolneLekturyAPI:
     @classmethod
     def get_books(cls):
         response = requests.get("https://wolnelektury.pl/api/books")
+        if not response:
+            return
         json_response = response.json()
         for record in json_response:
             d = {'title': record['title'], 'author': record['author'], 'epoch': record['epoch'],
