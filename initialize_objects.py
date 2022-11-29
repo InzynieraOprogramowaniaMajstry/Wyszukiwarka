@@ -11,6 +11,8 @@ from config import Conf
 
 app = Flask(__name__)
 app.config.from_object(Conf)
+app.secret_key = b'secret'
+
 
 #initialize extensions
 db = SQLAlchemy(app)

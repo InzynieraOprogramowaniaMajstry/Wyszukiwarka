@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="app">
+ 
+    Witaj na profilu 
+
+    <v-app>
+      <v-main>
+
+        <template  v-if="books.length > 0">
+          <v-card>
+            <v-card-title>
+                <v-text-field
+                
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  single-line
+                  hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              v-model="selected"
+              :headers="headers"
+              :items="books"
+              item-key="url"
+              :items-per-page="5"
+              :search="search"
+              :single-select="singleSelect"
+              class="elevation-1"
+              show-select
+            >
+            <template v-slot:top>
+              <v-switch
+                v-model="singleSelect"
+                label="Check if you want to add one book at once"
+                class="pa-3"
+              ></v-switch>
+            </template>
+            <template #item.url="{ value }">
+              <a target="_blank" :href="value">
+                [[ value ]]
+              </a>
+            </template>
+            
+          </v-data-table>
+        
+        </v-card>
+    </template>
+
+    <v-btn v-if="selected.length > 0"  @click="showSelected"  rounded block class="m-3" color="success" > Add choosen books to library </v-btn>
+
+
+      
+
+
+      </v-main>   
+    </v-app>
+</div>
+  {% endblock %}
+   
+{% block scripts %}  
+<script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      delimiters: ['[[', ']]'],
+      data () {
+        return {
+          userBooks: [],
+          search: "",
+          singleSelect: false,
+          selected: [],
+          books:[],
+          loadingBooks:false,
+            headers: [
+          {
+            text: 'Rodzaj literacki',
+            align: 'start',
+            sortable: true,
+            value: 'kind',
+          },
+          { text: 'Tytuł', value: 'title' },
+          { text: 'Autor', value: 'author' },
+          { text: 'URL', value: 'url' },
+        ],
+      
+        }  
+      } ,
+        mounted:function(){
+          this.fetchBooks()
+        },
+        methods:{
+        fetchBooks(){
+        url = "https://wolnelektury.pl/api/books/" 
+        fetch(url)
+        .then((response) => {
+          console.log(response.ok)
+          if (response.ok) {
+            return response.json();
+          }else{
+            console.log( "Przpau")
+          }
+        })
+        .then((data) => this.books = data)
+        .finally(this.loadingBooks=false)
+        },
+        showSelected(){
+          console.log(this.selected)
+        }
+      }
+    })
+</script>
+{% endblock %}

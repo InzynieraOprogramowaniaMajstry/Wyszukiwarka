@@ -5,11 +5,12 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 sys.path.append("..")
 
-from flask import Blueprint
+from models.database import db, User
+
+from flask import Blueprint ,request, flash
 user_bp = Blueprint('user_bp', __name__)
 
-import requests
-from flask import json, render_template
+from flask import json, render_template, redirect, url_for
 
 @user_bp.route("/")
 def index():
@@ -35,3 +36,17 @@ def simple_query():
 @user_bp.route("/user")
 def user():
     return render_template("user.html")
+
+
+@user_bp.route("/profile",methods=['GET','POST'])
+def go_to_profile():
+    email = request.form['login']
+    password = request.form['password']
+    print(email)
+    print(password)
+    query = db.session.query(User).filter(User.email==email, User.password==password)
+    if query.first():
+        return render_template("profile.html")
+    else:
+        flash('Wrong login or password')
+        return redirect(url_for('user_bp.login'))
