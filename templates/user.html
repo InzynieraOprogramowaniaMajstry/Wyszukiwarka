@@ -2,16 +2,10 @@
 
 {% block content %}
 <div id="app">
-    <!-- <li v-for="book in books" style="border:2px dotted black; margin:3px;">
-        [[ book.title ]]
-      </li> -->
-      <!-- autor jako lower kebab case np. adam-mickiewicz -->
-      <br>
-      
-      <br>
+
+   <br>
     <v-app>
       <v-main>
-        <!-- <button  @click="fetchAuthors" style="border:5px solid blue; margin:20px; text-align: center;">AUTORZY</button> -->
         <v-select
         :items="authorsID"
         v-model = "selectedAuthor"
@@ -19,20 +13,7 @@
         outlined
         class="m4"
         ></v-select>
-        
-      <!-- 
-        <v-select
-        v-if="selectedAuthor"
-        :items="kinds"
-        v-model = "selectedKind"
-        label="Wybierz rodzaj literatury jeżeli chesz zawęzić wyszukiwanie"
-        outlined
-        class="m4"
-        >
-      </v-select> -->
-
-        <!-- <input v-model="userInput" placeholder="wpisz autora" style="border:5px solid blue; margin:20px; text-align: center;"> -->
-
+     
         <v-btn  v-if="selectedAuthor" @click="fetchBooks" :loading="loadingBooks" rounded block > Szukaj książek [[ selectedAuthor ]] </v-btn>
         <template  v-if="books.length > 0">
             <v-card>

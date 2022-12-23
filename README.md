@@ -50,7 +50,7 @@ flask db_drop
 install sqlite extension in vsc
 use commnd palatte (ctrl + shift + p)
 type  >sqlite new_query
-seclet * from planets
+seclet * from user
 run file ( ctrl + shtift + q)
 ```
 

@@ -20,6 +20,10 @@ def index():
 def login():
     return render_template("login.html")
 
+@user_bp.route("/register")
+def register():
+    return render_template("register.html")
+
 
 @user_bp.route("/api")
 def a():
@@ -46,7 +50,29 @@ def go_to_profile():
     print(password)
     query = db.session.query(User).filter(User.email==email, User.password==password)
     if query.first():
-        return render_template("profile.html")
+        return render_template("profile.html", email=email)
     else:
         flash('Wrong login or password')
         return redirect(url_for('user_bp.login'))
+
+@user_bp.route("/login",methods=['GET','POST'])
+def add_user():
+    email = request.form['login']
+    password = request.form['password']
+    query = db.session.query(User).filter(User.email==email)
+    print(email)
+    print(password)
+    if query.first():
+        flash('User with given email already exists')
+        print("exists user")
+        return redirect(url_for('user_bp.register'))
+    else:
+        print("create new user")
+        user = User(email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('user_bp.login'))
+
+
+
+    

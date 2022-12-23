@@ -16,27 +16,24 @@ class User(db.Model):
     email = Column(String, unique=True)
     password = Column(String)
 
-class Planet(db.Model):
+class Books(db.Model):
     __tablename__ = "planets"
-    planet_id = Column(Integer, primary_key=True)
-    planet_name = Column(String, unique=True)
-    planet_type = Column(String)
-    home_star = Column(String)
-    mass = Column(Float)
-    radius = Column(Float)
-    distance = Column(Float)
+    book_id = Column(Integer, primary_key=True)
+    title = Column(String, unique=True)
+    author = Column(String)
+
+    
 
 class UserSchema(marshmallow.Schema):
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'email', 'password')
 
-class PlanetSchema(marshmallow.Schema):
+class BookSchema(marshmallow.Schema):
     class Meta:
-        fields = ("planet_id", "planet_name", "planet_type", 
-                  "home_star", "mass", "radius", "distance")
+        fields = ("book_id", "title", "author" )
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
-planet_schema = PlanetSchema()
-planets_schema = PlanetSchema(many=True)
+planet_schema = BookSchema()
+planets_schema = BookSchema(many=True)

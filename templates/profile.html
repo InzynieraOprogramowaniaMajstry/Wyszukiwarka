@@ -3,9 +3,11 @@
 {% block content %}
 <div id="app">
  
-    Witaj na profilu 
-
-    <v-app>
+  <div class="alert alert-info" role="alert" text-align="center">
+    <marquee  scrollmount="8"> Witaj na swoim profilu {{email}} </marquee>
+  </div> 
+  
+  <v-app>
       <v-main>
 
         <template  v-if="books.length > 0">
@@ -53,6 +55,46 @@
 
 
       
+    <template  v-if="userBooks.length > 0">
+      <v-card>
+        <v-card-title>
+            <v-text-field
+            
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          v-model="selected"
+          :headers="headers"
+          :items="userBooks"
+          item-key="url"
+          :items-per-page="5"
+          :search="search"
+          :single-select="singleSelect"
+          class="elevation-1"
+          show-select
+        >
+        <template v-slot:top>
+          <v-switch
+            v-model="singleSelect"
+            label="Check if you want to add one book at once"
+            class="pa-3"
+          ></v-switch>
+        </template>
+        <template #item.url="{ value }">
+          <a target="_blank" :href="value">
+            [[ value ]]
+          </a>
+        </template>
+        
+      </v-data-table>
+    
+    </v-card>
+</template>
 
 
       </v-main>   
@@ -108,6 +150,15 @@
         },
         showSelected(){
           console.log(this.selected)
+          for (let i = 0; i < this.selected.length ; i++) {
+            if (this.userBooks.includes(this.selected[i])){
+
+            }else{
+              this.userBooks.push(this.selected[i])
+            }
+          }
+          console.log(this.userBooks)
+
         }
       }
     })
