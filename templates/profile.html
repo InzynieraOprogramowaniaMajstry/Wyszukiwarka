@@ -54,11 +54,6 @@
     <v-btn v-if="selected.length > 0"  @click="addToLibrary"  rounded block class="m-3" color="success" > Add choosen books to library </v-btn>
 
 
-
-
-
-
-
     <template>
       <v-row justify="center">
         <v-dialog
@@ -113,7 +108,7 @@
                 <v-card-title>
                     <v-text-field
                     
-                      v-model="search"
+                      v-model="mySearch"
                       append-icon="mdi-magnify"
                       label="Search"
                       single-line
@@ -151,14 +146,6 @@
         
           <v-btn v-if="selected2.length > 0"  @click="removeFromLibrary"  rounded block class="m-3" color="error" > Remove choosen books from your library </v-btn>
         
-
-
-
-
-
-
-
-
 
           </v-card>
         </v-dialog>
