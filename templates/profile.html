@@ -54,6 +54,130 @@
     <v-btn v-if="selected.length > 0"  @click="addToLibrary"  rounded block class="m-3" color="success" > Add choosen books to library </v-btn>
 
 
+
+
+
+
+
+    <template>
+      <v-row justify="center">
+        <v-dialog
+          v-model="dialog"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="primary"
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              Open your library
+            </v-btn>
+          </template>
+          <v-card>
+            <v-toolbar
+              dark
+              color="primary"
+            >
+              <v-btn
+                icon
+                dark
+                @click="dialog = false"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Your books</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn
+                  dark
+                  text
+                  @click="dialog = false"
+                >
+                  Exit library
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            
+
+            <div v-if="userBooks.length == 0" class="alert alert-warning m-3" rounded role="alert">
+              You don't have any books in library now!
+            </div>
+
+      
+            <template  v-if="userBooks.length > 0">
+              <v-card>
+                <v-card-title>
+                    <v-text-field
+                    
+                      v-model="search"
+                      append-icon="mdi-magnify"
+                      label="Search"
+                      single-line
+                      hide-details
+                    ></v-text-field>
+                </v-card-title>
+                <v-data-table
+                  v-model="selected2"
+                  :headers="headers"
+                  :items="userBooks"
+                  item-key="url"
+                  :items-per-page="5"
+                  :search="mySearch"
+                  :single-select="singleSelect2"
+                  class="elevation-1"
+                  show-select
+                >
+                <template v-slot:top>
+                  <v-switch
+                    v-model="singleSelect2"
+                    label="Check if you want to remove one book at once"
+                    class="pa-3"
+                  ></v-switch>
+                </template>
+                <template #item.url="{ value }">
+                  <a target="_blank" :href="value">
+                    [[ value ]]
+                  </a>
+                </template>
+                
+              </v-data-table>
+            
+            </v-card>
+        </template>
+        
+          <v-btn v-if="selected2.length > 0"  @click="removeFromLibrary"  rounded block class="m-3" color="error" > Remove choosen books from your library </v-btn>
+        
+
+
+
+
+
+
+
+
+
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
       
     <template  v-if="userBooks.length > 0">
       <v-card>
@@ -68,20 +192,20 @@
             ></v-text-field>
         </v-card-title>
         <v-data-table
-          v-model="selected"
+          v-model="selected2"
           :headers="headers"
           :items="userBooks"
           item-key="url"
           :items-per-page="5"
           :search="mySearch"
-          :single-select="singleSelect"
+          :single-select="singleSelect2"
           class="elevation-1"
           show-select
         >
         <template v-slot:top>
           <v-switch
-            v-model="singleSelect"
-            label="Check if you want to add one book at once"
+            v-model="singleSelect2"
+            label="Check if you want to remove one book at once"
             class="pa-3"
           ></v-switch>
         </template>
@@ -96,6 +220,7 @@
     </v-card>
 </template>
 
+  <v-btn v-if="selected2.length > 0"  @click="removeFromLibrary"  rounded block class="m-3" color="error" > Remove choosen books from your library </v-btn> -->
 
       </v-main>   
     </v-app>
@@ -110,15 +235,17 @@
       delimiters: ['[[', ']]'],
       data () {
         return {
+          dialog: false,
+
+
+
           userBooks: [],
           search: "",
           mySearch: "",
-          dialog: false,
-          dialogDelete: false,
           singleSelect: false,
-          editedIndex: -1,
-
+          singleSelect2: false,
           selected: [],
+          selected2: [],
           books:[],
           loadingBooks:false,
             headers: [
@@ -139,13 +266,6 @@
           this.fetchBooks()
         },
         methods:{
-
-        deleteItem (item) {
-        this.editedIndex = this.userBooks.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-      },
-
         fetchBooks(){
         url = "https://wolnelektury.pl/api/books/" 
         fetch(url)
@@ -171,6 +291,16 @@
           }
           console.log(this.userBooks)
 
+        },
+        removeFromLibrary(){
+          for (let i = 0; i < this.selected2.length ; i++) {
+            if (this.userBooks.includes(this.selected2[i])){
+              this.userBooks.splice(this.selected2[i],1)
+            }else{
+            }
+          }
+          console.log(this.userBooks)
+          this.selected2= [];
         }
       }
     })
