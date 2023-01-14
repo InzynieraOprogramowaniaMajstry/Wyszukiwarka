@@ -16,6 +16,6 @@ app.secret_key = b'secret'
 
 #initialize extensions
 db = SQLAlchemy(app)
-marshmallow = Marshmallow(app)
+# marshmallow = Marshmallow(app)
 
 WolneLekturyAPI.fetch_api()
