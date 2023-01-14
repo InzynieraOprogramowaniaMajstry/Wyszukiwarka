@@ -5,8 +5,13 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 sys.path.append("..")
 
 
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, ForeignKey
 from initialize_objects import db, marshmallow
+
+# user_books = db.Table('user_books',
+    # Column('user_id', Integer, ForeignKey('user.id')),
+    # Column('book_id', Integer, ForeignKey('book.book_id'))
+# )
 
 class User(db.Model):
     __table_args__ = {'extend_existing': True}
@@ -15,12 +20,14 @@ class User(db.Model):
     last_name = Column(String)
     email = Column(String, unique=True)
     password = Column(String)
+    # books = db.relationship('Book', secondary = user_books, backref = 'books')
 
-class Books(db.Model):
+class Book(db.Model):
     __tablename__ = "planets"
     book_id = Column(Integer, primary_key=True)
     title = Column(String, unique=True)
     author = Column(String)
+
 
     
 
