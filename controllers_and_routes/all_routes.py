@@ -69,7 +69,7 @@ def login_user():
         user_id = DatabaseOperations.get_user_id(email)
         resp = make_response(render_template("profile.html"))
         resp.set_cookie('email', value=email)
-        resp.set_cookie('user_id', value=user_id)
+        resp.set_cookie('user_id', value=str(user_id))
         return resp
     else:
         flash('Wrong login or password')
