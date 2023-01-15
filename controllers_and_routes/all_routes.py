@@ -50,15 +50,21 @@ def simple_query():
 def user():
     return render_template("user.html")
 
+@user_bp.route("/logout")
+def logout_user():
+    resp = make_response(render_template("main.html"))
+    resp.set_cookie('email', '')
+    resp.set_cookie('user_id', '')
+    return resp
 
-@user_bp.route("/profile")
+@user_bp.route("/library")
 def profile():
     email = request.cookies.get('email')
     user_id = request.cookies.get('user_id')
-    return render_template("profile.html", email=email, user_id=user_id)
+    return render_template("library.html", email=email, user_id=user_id)
 
 
-@user_bp.route("/profile", methods=['GET', 'POST'])
+@user_bp.route("/library", methods=['GET', 'POST'])
 def login_user():
     email = request.form['login']
     password = request.form['password']
@@ -67,7 +73,7 @@ def login_user():
     # query = db.session.query(User).filter(User.email==email, User.password==password)
     if DatabaseOperations.check_if_password_matches(email, password):
         user_id = DatabaseOperations.get_user_id(email)
-        resp = make_response(render_template("profile.html"))
+        resp = make_response(render_template("library.html"))
         resp.set_cookie('email', value=email)
         resp.set_cookie('user_id', value=str(user_id))
         return resp
@@ -92,7 +98,7 @@ def add_user():
         print("create new user")
 
         user_id = DatabaseOperations.add_user(email, password)
-        resp = make_response(render_template("profile.html"))
+        resp = make_response(render_template("library.html"))
         resp.set_cookie('email', value=email)
-        resp.set_cookie('user_id', value=user_id)
+        resp.set_cookie('user_id', value=str(user_id))
         return resp
