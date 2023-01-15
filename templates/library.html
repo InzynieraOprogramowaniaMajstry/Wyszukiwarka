@@ -9,55 +9,6 @@
 
   <v-app>
       <v-main>
-    <template>
-      <v-row justify="center">
-        <v-dialog
-          v-model="dialog"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              Open your library
-            </v-btn>
-          </template>
-          <v-card>
-            <v-toolbar
-              dark
-              color="primary"
-            >
-              <v-btn
-                icon
-                dark
-                @click="dialog = false"
-              >
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Your books</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-toolbar-items>
-                <v-btn
-                  dark
-                  text
-                  @click="dialog = false"
-                >
-                  Exit library
-                </v-btn>
-              </v-toolbar-items>
-            </v-toolbar>
-
-
-            <div v-if="userBooks.length == 0" class="alert alert-warning m-3" rounded role="alert">
-              You don't have any books in library now!
-            </div>
-
-
             <template  v-if="userBooks.length > 0">
               <v-card>
                 <v-card-title>
@@ -100,12 +51,6 @@
         </template>
 
           <v-btn v-if="selected2.length > 0"  @click="removeFromLibrary"  rounded block class="m-3" color="error" > Remove choosen books from your library </v-btn>
-
-
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </template>
       </v-main>
     </v-app>
 </div>
