@@ -11,6 +11,7 @@ class DatabaseOperations:
         user = User(email=email, password=hashed_password)
         db.session.add(user)
         db.session.commit()
+        return user.user_id
 
     @classmethod
     def delete_user(cls, email):
@@ -41,11 +42,22 @@ class DatabaseOperations:
 
     @classmethod
     def check_if_email_exists(cls, email):
-        user = db.session.execute(db.select(User).filter_by(email=email))
-        return user is not None
+        try:
+            db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
+            return True
+        except:
+            return False
+
+    @classmethod
+    def get_user_id(cls, email):
+        user: User = db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
+        return user.user_id
 
     @classmethod
     def check_if_password_matches(cls, email, password):
         hashed_password = hashlib.sha512(str.encode(password)).hexdigest()
-        user = db.session.execute(db.select(User).filter_by(email=email, password=hashed_password))
-        return user is not None
+        try:
+            db.session.execute(db.select(User).filter_by(email=email, password=hashed_password)).scalar_one()
+            return True
+        except:
+            return False

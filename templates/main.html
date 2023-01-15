@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="app">
+  <v-app>
+      <v-main>
+
+    <v-btn depressed>
+      Normal
+    </v-btn>
+      </v-main>
+    </v-app>
+</div>
+  {% endblock %}
+
+{% block scripts %}
+<script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+    })
+</script>
+{% endblock %}
