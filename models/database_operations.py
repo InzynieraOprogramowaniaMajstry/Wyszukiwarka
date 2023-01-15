@@ -14,8 +14,9 @@ class DatabaseOperations:
 
     @classmethod
     def delete_user(cls, email):
-        user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
+        user = db.session.execute(db.select(User).filter_by(email=email))
         if user is not None:
+            user = user.scalar_one()
             db.session.delete(user)
             db.session.commit()
 
@@ -39,18 +40,12 @@ class DatabaseOperations:
         db.session.commit()
 
     @classmethod
-    def remove_book_from_library(cls, user_id, book_id):
-        book: Book = db.session.execute(db.select(Book).filter_by(user_id=user_id, book_id=book_id)).scalar_one()
-        db.session.delete(book)
-        db.session.commit()
-
-    @classmethod
     def check_if_email_exists(cls, email):
-        user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
+        user = db.session.execute(db.select(User).filter_by(email=email))
         return user is not None
 
     @classmethod
     def check_if_password_matches(cls, email, password):
         hashed_password = hashlib.sha512(str.encode(password)).hexdigest()
-        user = db.session.execute(db.select(User).filter_by(email=email, password=hashed_password)).scalar_one()
+        user = db.session.execute(db.select(User).filter_by(email=email, password=hashed_password))
         return user is not None
