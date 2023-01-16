@@ -91,3 +91,30 @@ def add_user():
         resp.set_cookie('email', value=email, secure=True)
         resp.set_cookie('user_id', value=str(user_id), secure=True)
         return resp
+
+
+@user_bp.route("/addBook", methods=['POST'])
+def add_book(book_id):
+
+    user_id = request.cookies.get('user_id')
+    email = request.cookies.get('email')
+
+    if user_id is None:
+        flash("You are not logged in!")
+        return redirect(url_for('user_bp.index'))
+    else:
+        DatabaseOperations.add_book_to_library(user_id=user_id, book_id=book_id)
+        return render_template(LIBRARY, email=email, user_id=user_id)
+
+
+@user_bp.route("/readUserBook", methods=['GET'])
+def get_user_books():
+
+    user_id = request.cookies.get('user_id')
+
+    if user_id is None:
+        flash("You are not logged in!")
+        return redirect(url_for('user_bp.index'))
+    else:
+        DatabaseOperations.(user_id=user_id, book_id=book_id)
+        return render_template(LIBRARY, email=email, user_id=user_id)

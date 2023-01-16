@@ -1,6 +1,5 @@
 import sys
 import os
-
 from flask_wtf import CSRFProtect
 
 SCRIPT_DIR = os.path.dirname(__file__)
