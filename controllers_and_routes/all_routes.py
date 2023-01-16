@@ -117,19 +117,6 @@ def add_book(book_id):
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 
-@user_bp.route("/readUserBook", methods=['GET'])
-def get_user_books():
-
-    user_id = request.cookies.get('user_id')
-    email = request.cookies.get('email')
-
-    if user_id is None:
-        flash(NOT_LOGGED)
-        return redirect(url_for(INDEX))
-    else:
-        books = DatabaseOperations.get_book_from_library(user_id=user_id)
-        return render_template(LIBRARY, email=email, user_id=user_id)
-
 @user_bp.route("/fetchUserBooks")
 def fetch_books():
 

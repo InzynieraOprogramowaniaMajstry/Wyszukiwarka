@@ -121,29 +121,9 @@
         }
       } ,
         mounted:function(){
-          this.fetchBooks(),
           this.getBooksFromDb()
         },
         methods:{
-        fetchBooks(){
-        url = "https://wolnelektury.pl/api/books/"
-        fetch(url)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => this.books = data)
-        .finally(this.loadingBooks=false)
-        },
-        addToLibrary(){
-          for (let i = 0; i < this.selected.length ; i++) {
-            if (!this.userBooks.includes(this.selected[i])){
-              this.userBooks.push(this.selected[i])
-            }
-          }
-
-        },
         removeFromLibrary(){
           for (let i = 0; i < this.selected2.length ; i++) {
             if (this.userBooks.includes(this.selected2[i])){
