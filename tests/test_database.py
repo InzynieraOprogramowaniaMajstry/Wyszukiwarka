@@ -9,7 +9,7 @@ class TestDatabase(unittest.TestCase):
         password = hashlib.sha512(str.encode("123")).hexdigest()
         user = User(email="test", password=password)
         self.assertEqual(user.email, "test")
-        self.assertEqual(user.password, "123")
+        self.assertEqual(user.password, password)
 
     def test_book(self):
         book = Book(user_id=1, book_id='a')
