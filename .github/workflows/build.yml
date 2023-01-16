@@ -21,6 +21,12 @@ jobs:
         run: pip install pytest-cov
       - name: Install pytest
         run: pip install pytest
+      - name: req
+        run: pip install -r requirements.txt
+      - name: Install tox and any other packages
+        run: pip install tox
+      - name: Run tox
+        run: tox -e py
 #       - name: Run test
 #         run: python -m pytest -vv
 #       - name: coverage 1
