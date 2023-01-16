@@ -32,6 +32,11 @@ class TestWolneLekturyAPI(unittest.TestCase):
     def test_fetch_api(self):
         WolneLekturyAPI.fetch_api()
         self.assertNotEqual(0, len(WolneLekturyAPI.kinds_list))
+        WolneLekturyAPI.books_list = []
+        WolneLekturyAPI.epochs_list = []
+        WolneLekturyAPI.genres_list = []
+        WolneLekturyAPI.authors_list = []
+        WolneLekturyAPI.kinds_list = []
 
 
 if __name__ == '__main__':
