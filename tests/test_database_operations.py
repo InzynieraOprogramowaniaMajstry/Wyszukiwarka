@@ -71,7 +71,7 @@ class TestDataseOperations(TestCase):
         book = Book(user_id=999, book_id='test')
         self.db.session.add(book)
         self.db.session.commit()
-        books = DatabaseOperations.get_books_from_library(999)
+        books = DatabaseOperations.get_book_from_library(999)
         self.assertNotEqual([], books)
         self.db.session.delete(book)
         self.db.session.commit()

@@ -4,10 +4,17 @@ from models.wolne_lektury_api import WolneLekturyAPI
 
 
 class TestWolneLekturyAPI(unittest.TestCase):
+    def setUp(self) -> None:
+        WolneLekturyAPI.books_list = []
+        WolneLekturyAPI.epochs_list = []
+        WolneLekturyAPI.genres_list = []
+        WolneLekturyAPI.authors_list = []
+        WolneLekturyAPI.kinds_list = []
+
     def test_books(self):
-        self.assertEqual(0, len(WolneLekturyAPI.books_list))
-        WolneLekturyAPI.get_books()
-        self.assertNotEqual(0, len(WolneLekturyAPI.books_list))
+            self.assertEqual(0, len(WolneLekturyAPI.books_list))
+            WolneLekturyAPI.get_books()
+            self.assertNotEqual(0, len(WolneLekturyAPI.books_list))
 
     def test_authors(self):
         self.assertEqual(0, len(WolneLekturyAPI.authors_list))
@@ -32,11 +39,6 @@ class TestWolneLekturyAPI(unittest.TestCase):
     def test_fetch_api(self):
         WolneLekturyAPI.fetch_api()
         self.assertNotEqual(0, len(WolneLekturyAPI.kinds_list))
-        WolneLekturyAPI.books_list = []
-        WolneLekturyAPI.epochs_list = []
-        WolneLekturyAPI.genres_list = []
-        WolneLekturyAPI.authors_list = []
-        WolneLekturyAPI.kinds_list = []
 
 
 if __name__ == '__main__':
