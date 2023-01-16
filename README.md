@@ -18,34 +18,17 @@ pip install -r requirements.txt
 ```
 
 ## Run application in terminal
-```
-flask run
-```
-
-## use db_commands
 
 Active virtual environment in new terminal
 ```
 .\venv\Scripts\activate
 ```
 
-create db
 ```
-flask db_create
-```
-
-create example records(seed)
-```
-flask db_seed
+flask run
 ```
 
-
-drop db
-```
-flask db_drop
-```
-
-## use db_commands
+## see db inside
 ```
 install sqlite extension in vsc
 use command palette (ctrl + shift + p)
