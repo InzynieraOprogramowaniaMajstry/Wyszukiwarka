@@ -15,6 +15,3 @@ class TestDatabase(unittest.TestCase):
         book = Book(user_id=1, book_id='a')
         self.assertEqual(book.book_id, 'a')
         self.assertEqual(book.user_id, 1)
-
-if __name__ == '__main__':
-    unittest.main()

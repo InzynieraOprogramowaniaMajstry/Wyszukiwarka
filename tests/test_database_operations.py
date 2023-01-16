@@ -77,6 +77,15 @@ class TestDataseOperations(TestCase):
         self.db.session.delete(book)
         self.db.session.commit()
 
+    def test_get_one_book(self):
+        book = Book(user_id=999, book_id='test')
+        self.db.session.add(book)
+        self.db.session.commit()
+        book_get = DatabaseOperations.get_one_book(999, 'test')
+        self.assertEqual(book, book_get)
+        self.db.session.delete(book)
+        self.db.session.commit()
+
     def test_check_if_email_exists(self):
         email = EMAIL
         password = hashlib.sha512(str.encode("123")).hexdigest()
@@ -86,6 +95,7 @@ class TestDataseOperations(TestCase):
         self.assertTrue(DatabaseOperations.check_if_email_exists(email))
         self.db.session.delete(user)
         self.db.session.commit()
+        self.assertFalse(DatabaseOperations.check_if_email_exists(email))
 
     def test_check_if_password_matches(self):
         email = "b@b.com"
@@ -94,8 +104,10 @@ class TestDataseOperations(TestCase):
         self.db.session.add(user)
         self.db.session.commit()
         self.assertTrue(DatabaseOperations.check_if_password_matches(email, "456"))
+        self.assertFalse(DatabaseOperations.check_if_password_matches(email, "aaa"))
         self.db.session.delete(user)
         self.db.session.commit()
+
 
     def test_get_user_id(self):
         email = "b@b.com"
@@ -107,6 +119,3 @@ class TestDataseOperations(TestCase):
         self.assertEqual(user.user_id, user_id)
         self.db.session.delete(user)
         self.db.session.commit()
-
-if __name__ == '__main__':
-    unittest.main()
