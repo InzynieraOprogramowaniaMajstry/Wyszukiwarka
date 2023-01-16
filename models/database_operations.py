@@ -52,6 +52,12 @@ class DatabaseOperations:
         db.session.commit()
 
     @classmethod
+    def get_book_from_library(cls, user_id):
+        """Remove given book from the user library"""
+        books = db.session.execute(db.select(Book).filter_by(user_id=user_id))
+        return books
+
+    @classmethod
     def check_if_email_exists(cls, email):
         """Check if given email already exists in the database"""
         try:
