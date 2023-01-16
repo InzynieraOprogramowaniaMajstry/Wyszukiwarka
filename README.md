@@ -1,6 +1,6 @@
 # Wyszukiwarka
 
-## Installtion
+## Installation
 
 Create virtual environment
 ```
@@ -48,9 +48,9 @@ flask db_drop
 ## use db_commands
 ```
 install sqlite extension in vsc
-use commnd palatte (ctrl + shift + p)
+use command palette (ctrl + shift + p)
 type  >sqlite new_query
-seclet * from user
-run file ( ctrl + shtift + q)
+selecet * from user
+run file (ctrl + shift + q)
 ```
 
