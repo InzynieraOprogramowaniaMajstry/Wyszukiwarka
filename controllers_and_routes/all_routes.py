@@ -6,6 +6,8 @@ from models.database_operations import DatabaseOperations
 
 from flask import Blueprint, request, flash, make_response, render_template, redirect, url_for
 
+from models.wolne_lektury_api import WolneLekturyAPI
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 sys.path.append("..")
@@ -13,6 +15,7 @@ sys.path.append("..")
 user_bp = Blueprint('user_bp', __name__)
 
 LIBRARY = "library.html"
+
 
 @user_bp.route("/")
 def index():
@@ -91,3 +94,8 @@ def add_user():
         resp.set_cookie('email', value=email, secure=True, httponly=True)
         resp.set_cookie('user_id', value=str(user_id), secure=True, httponly=True)
         return resp
+
+
+@user_bp.route("/readBooks", methods=['GET'])
+def get_books():
+    return WolneLekturyAPI.books_list
