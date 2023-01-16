@@ -10,6 +10,7 @@ import initialize_objects
 from models.database import User, Book
 from models.database_operations import DatabaseOperations
 
+EMAIL = "a@a.com"
 
 class TestDataseOperations(TestCase):
     SQLALCHEMY_DATABASE_URI = "sqlite://"
@@ -21,7 +22,7 @@ class TestDataseOperations(TestCase):
         return app
 
     def test_add_user(self):
-        email = "a@a.com"
+        email = EMAIL
         password = "123"
         DatabaseOperations.add_user(email, password)
 
@@ -31,7 +32,7 @@ class TestDataseOperations(TestCase):
         self.db.session.commit()
 
     def test_delete_user(self):
-        email = "a@a.com"
+        email = EMAIL
         password = "123"
         user: User = User(email=email, password=password)
         self.db.session.add(user)
@@ -41,7 +42,7 @@ class TestDataseOperations(TestCase):
         self.assertEqual(None, user)
 
     def test_update_password(self):
-        email = "a@a.com"
+        email = EMAIL
         password = hashlib.sha512(str.encode("123")).hexdigest()
         user: User = User(email=email, password=password)
         self.db.session.add(user)
@@ -77,7 +78,7 @@ class TestDataseOperations(TestCase):
         self.db.session.commit()
 
     def test_check_if_email_exists(self):
-        email = "a@a.com"
+        email = EMAIL
         password = hashlib.sha512(str.encode("123")).hexdigest()
         user: User = User(email=email, password=password)
         self.db.session.add(user)
@@ -102,8 +103,8 @@ class TestDataseOperations(TestCase):
         user: User = User(email=email, password=password)
         self.db.session.add(user)
         self.db.session.commit()
-        id = DatabaseOperations.get_user_id(email)
-        self.assertEqual(user.user_id, id)
+        user_id = DatabaseOperations.get_user_id(email)
+        self.assertEqual(user.user_id, user_id)
         self.db.session.delete(user)
         self.db.session.commit()
 
