@@ -31,7 +31,7 @@ class DatabaseOperations:
 
     @classmethod
     def update_password(cls, user_id, password):
-        """Update the password for the given user, hashish password beforehand"""
+        """Update the password for the given user, hashing password beforehand"""
         hashed_password = hashlib.sha512(str.encode(password)).hexdigest()
         user: User = db.session.execute(db.select(User).filter_by(user_id=user_id)).scalar_one()
         user.password = hashed_password
