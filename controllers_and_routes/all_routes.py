@@ -15,6 +15,8 @@ sys.path.append("..")
 user_bp = Blueprint('user_bp', __name__)
 
 LIBRARY = "library.html"
+NOT_LOGGED = "Nie jesteś zalogowany!"
+INDEX = 'user_bp.index'
 
 
 @user_bp.route("/")
@@ -54,8 +56,8 @@ def profile():
     email = request.cookies.get('email')
     user_id = request.cookies.get('user_id')
     if user_id is None:
-        flash("Nie jesteś zalogowany!")
-        return redirect(url_for('user_bp.index'))
+        flash(NOT_LOGGED)
+        return redirect(url_for(INDEX))
     else:
         return render_template(LIBRARY, email=email, user_id=user_id)
 
@@ -109,8 +111,8 @@ def add_book(book_id):
     email = request.cookies.get('email')
 
     if user_id is None:
-        flash("Nie jesteś zalogowany!")
-        return redirect(url_for('user_bp.index'))
+        flash(NOT_LOGGED)
+        return redirect(url_for(INDEX))
     else:
         if DatabaseOperations.get_one_book(user_id=user_id,book_id=book_id):
             print("FOUNDED BOOK FOR USER")
@@ -126,8 +128,8 @@ def get_user_books():
     email = request.cookies.get('email')
 
     if user_id is None:
-        flash("Nie jesteś zalogowany!")
-        return redirect(url_for('user_bp.index'))
+        flash(NOT_LOGGED)
+        return redirect(url_for(INDEX))
     else:
         books = DatabaseOperations.get_book_from_library(user_id=user_id)
         print(user_id)
@@ -135,12 +137,12 @@ def get_user_books():
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 @user_bp.route("/fetchUserBooks")
-def gooo():
+def fetch_books():
 
     user_id = request.cookies.get('user_id')
     if user_id is None:
-        flash("Nie jesteś zalogowany!")
-        return redirect(url_for('user_bp.index'))
+        flash(NOT_LOGGED)
+        return redirect(url_for(INDEX))
 
     books = DatabaseOperations.get_book_from_library(user_id)
     books_id = [book[0].book_id for book in books]
@@ -151,14 +153,14 @@ def gooo():
     
 
 @user_bp.route("/removeBook/<book_id>", methods=['GET','POST'])
-def removeBook(book_id):
+def remove_book(book_id):
 
     user_id = request.cookies.get('user_id')
     email = request.cookies.get('email')
 
     if user_id is None:
-        flash("Nie jesteś zalogowany!")
-        return redirect(url_for('user_bp.index'))
+        flash(NOT_LOGGED)
+        return redirect(url_for(INDEX))
     else:
         DatabaseOperations.remove_book_from_library(user_id=user_id, book_id=book_id)
         return render_template(LIBRARY, email=email, user_id=user_id)
