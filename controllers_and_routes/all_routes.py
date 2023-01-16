@@ -6,6 +6,8 @@ from models.database_operations import DatabaseOperations
 
 from flask import Blueprint, request, flash, make_response, render_template, redirect, url_for
 
+from models.wolne_lektury_api import WolneLekturyAPI
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 sys.path.append("..")
@@ -13,6 +15,7 @@ sys.path.append("..")
 user_bp = Blueprint('user_bp', __name__)
 
 LIBRARY = "library.html"
+
 
 @user_bp.route("/")
 def index():
@@ -65,6 +68,7 @@ def login_user():
     password = request.form['password']
     if DatabaseOperations.check_if_password_matches(email, password):
         user_id = DatabaseOperations.get_user_id(email)
+
         resp = make_response(render_template(LIBRARY, email=email, user_id=user_id))
         resp.set_cookie('email', value=email, secure=True, httponly=True)
         resp.set_cookie('user_id', value=str(user_id), secure=True, httponly=True)
@@ -93,7 +97,12 @@ def add_user():
         return resp
 
 
-@user_bp.route("/addBook", methods=['GET','POST'])
+@user_bp.route("/readBooks", methods=['GET'])
+def get_books():
+    return WolneLekturyAPI.books_list
+
+
+@user_bp.route("/addBook/<book_id>", methods=['GET','POST'])
 def add_book(book_id):
 
     user_id = request.cookies.get('user_id')
@@ -120,4 +129,54 @@ def get_user_books():
         books = DatabaseOperations.get_book_from_library(user_id=user_id)
         print(user_id)
         print(books)
+        return render_template(LIBRARY, email=email, user_id=user_id)
+
+@user_bp.route("/fetchUserBooks")
+def gooo():
+
+    user_id = request.cookies.get('user_id')
+    if user_id is None:
+        flash("You are not logged in!")
+        return redirect(url_for('user_bp.index'))
+
+    books = DatabaseOperations.get_book_from_library(user_id)
+    print(books[0][0].book_id)
+    books_id = [book[0].book_id for book in books]
+    print(books_id)
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+    print("===================================")
+
+
+    all_books = WolneLekturyAPI.books_list
+    # my_books =all_books.filter()
+    my_books = list(filter(lambda c: c['id'] in books_id, all_books))
+    print(my_books)
+    return my_books
+    
+
+@user_bp.route("/removeBook/<book_id>", methods=['GET','POST'])
+def removeBook(book_id):
+
+    user_id = request.cookies.get('user_id')
+    email = request.cookies.get('email')
+
+    if user_id is None:
+        flash("You are not logged in!")
+        return redirect(url_for('user_bp.index'))
+    else:
+        DatabaseOperations.remove_book_from_library(user_id=user_id, book_id=book_id)
         return render_template(LIBRARY, email=email, user_id=user_id)
