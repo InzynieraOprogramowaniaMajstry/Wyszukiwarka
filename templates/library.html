@@ -1,10 +1,32 @@
 {% extends "base.html" %}
+{% block style %}
+.marquee {
+    width: 100%;
+    line-height: 50px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.marquee p {
+    display: inline-block;
+    top: 50%;
+    padding-left: 100%;
+    animation: marquee 7s linear infinite;
+}
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
 
+{% endblock %}
 {% block content %}
 <div id="app">
 
   <div class="alert alert-info" role="alert" text-align="center">
-    <marquee  scrollmount="8"> Witaj w swojej bibliotece {{request.cookies.get('email')}} </marquee>
+      <div class="marquee">
+          <p>Witaj w swojej bibliotece {{ email}}</p>
+      </div>
   </div>
 
   <v-app>

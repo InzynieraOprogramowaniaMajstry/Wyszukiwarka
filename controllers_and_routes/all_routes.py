@@ -62,7 +62,7 @@ def login_user():
     password = request.form['password']
     if DatabaseOperations.check_if_password_matches(email, password):
         user_id = DatabaseOperations.get_user_id(email)
-        resp = make_response(render_template("library.html"))
+        resp = make_response(render_template("library.html", email=email, user_id=user_id))
         resp.set_cookie('email', value=email)
         resp.set_cookie('user_id', value=str(user_id))
         return resp
@@ -84,7 +84,7 @@ def add_user():
     else:
         print("create new user")
         user_id = DatabaseOperations.add_user(email, password)
-        resp = make_response(render_template("library.html"))
+        resp = make_response(render_template("library.html", email=email, user_id=user_id))
         resp.set_cookie('email', value=email)
         resp.set_cookie('user_id', value=str(user_id))
         return resp
