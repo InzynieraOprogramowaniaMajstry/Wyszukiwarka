@@ -11,7 +11,7 @@ from models.database import User, Book
 from models.database_operations import DatabaseOperations
 
 
-class MyTestCase(TestCase):
+class TestDataseOperations(TestCase):
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     TESTING = True
 

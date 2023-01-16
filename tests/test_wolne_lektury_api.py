@@ -3,7 +3,7 @@ import unittest
 from models.wolne_lektury_api import WolneLekturyAPI
 
 
-class MyTestCase(unittest.TestCase):
+class TestWolneLekturyAPI(unittest.TestCase):
     def test_books(self):
         self.assertEqual(0, len(WolneLekturyAPI.books_list))
         WolneLekturyAPI.get_books()
