@@ -33,7 +33,17 @@ flask run
 install sqlite extension in vsc
 use command palette (ctrl + shift + p)
 type  >sqlite new_query
-selecet * from user
+select * from user
 run file (ctrl + shift + q)
 ```
 
+## run tests
+```
+python -m pytest -vv
+```
+
+## get test coverage information
+```
+coverage run -m pytest
+coverage report
+```
