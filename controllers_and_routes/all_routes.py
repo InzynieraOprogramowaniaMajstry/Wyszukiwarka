@@ -1,5 +1,7 @@
 import sys
 import os
+
+from initialize_objects import csrf
 from models.database_operations import DatabaseOperations
 
 from flask import Blueprint, request, flash, make_response, render_template, redirect, url_for
@@ -55,7 +57,7 @@ def profile():
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 
-@user_bp.route("/library", methods=['GET', 'POST'])
+@user_bp.route("/library", methods=['POST'])
 def login_user():
     """Check if filled email and password matches saved in the database and if so, set user cookies and return its
     library page"""
@@ -72,7 +74,7 @@ def login_user():
         return redirect(url_for('user_bp.login'))
 
 
-@user_bp.route("/login", methods=['GET', 'POST'])
+@user_bp.route("/login", methods=['POST'])
 def add_user():
     """Check if user with given email doesn't exist and if not, add new user to the database, set user cookies
      and return its library page."""
