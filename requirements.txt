@@ -23,3 +23,4 @@ SQLAlchemy==1.4.42
 urllib3==1.26.12
 Werkzeug==2.2.2
 zipp==3.10.0
+Flask-Testing=0.8.1
