@@ -29,5 +29,10 @@ class MyTestCase(unittest.TestCase):
         WolneLekturyAPI.get_kinds()
         self.assertNotEqual(0, len(WolneLekturyAPI.kinds_list))
 
+    def test_fetch_api(self):
+        WolneLekturyAPI.fetch_api()
+        self.assertNotEqual(0, len(WolneLekturyAPI.kinds_list))
+
+
 if __name__ == '__main__':
     unittest.main()
