@@ -10,6 +10,7 @@ sys.path.append("..")
 
 user_bp = Blueprint('user_bp', __name__)
 
+LIBRARY = "library.html"
 
 @user_bp.route("/")
 def index():
@@ -51,7 +52,7 @@ def profile():
         flash("You are not logged in!")
         return redirect(url_for('user_bp.index'))
     else:
-        return render_template("library.html", email=email, user_id=user_id)
+        return render_template(LIBRARY, email=email, user_id=user_id)
 
 
 @user_bp.route("/library", methods=['GET', 'POST'])
@@ -62,7 +63,7 @@ def login_user():
     password = request.form['password']
     if DatabaseOperations.check_if_password_matches(email, password):
         user_id = DatabaseOperations.get_user_id(email)
-        resp = make_response(render_template("library.html", email=email, user_id=user_id))
+        resp = make_response(render_template(LIBRARY, email=email, user_id=user_id))
         resp.set_cookie('email', value=email)
         resp.set_cookie('user_id', value=str(user_id))
         return resp
@@ -84,7 +85,7 @@ def add_user():
     else:
         print("create new user")
         user_id = DatabaseOperations.add_user(email, password)
-        resp = make_response(render_template("library.html", email=email, user_id=user_id))
+        resp = make_response(render_template(LIBRARY, email=email, user_id=user_id))
         resp.set_cookie('email', value=email)
         resp.set_cookie('user_id', value=str(user_id))
         return resp

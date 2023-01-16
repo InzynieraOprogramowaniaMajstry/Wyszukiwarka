@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
 
 from models.database import User, Book
 import hashlib
@@ -56,7 +57,7 @@ class DatabaseOperations:
         try:
             db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
             return True
-        except:
+        except SQLAlchemyError:
             return False
 
     @classmethod
@@ -72,5 +73,5 @@ class DatabaseOperations:
         try:
             db.session.execute(db.select(User).filter_by(email=email, password=hashed_password)).scalar_one()
             return True
-        except:
+        except SQLAlchemyError:
             return False
