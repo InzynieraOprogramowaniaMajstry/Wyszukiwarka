@@ -50,6 +50,9 @@
                   :items="userBooks"
                   item-key="url"
                   :items-per-page="5"
+                  :footer-props="{
+                    'items-per-page-options': [5,10,20,30]
+                  }"
                   :search="mySearch"
                   :single-select="singleSelect2"
                   class="elevation-1"

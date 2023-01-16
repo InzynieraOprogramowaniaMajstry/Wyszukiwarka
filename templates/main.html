@@ -33,6 +33,9 @@
               :items="books"
               item-key="url"
               :items-per-page="5"
+              :footer-props="{
+                'items-per-page-options': [5,10,20,30]
+              }"
               :search="search"
               :single-select="singleSelect"
               class="elevation-1"
