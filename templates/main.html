@@ -77,9 +77,6 @@
       data () {
         return {
           dialog: false,
-
-
-
           userBooks: [],
           search: "",
           singleSelect: false,
@@ -109,36 +106,27 @@
         .then((response) => {
           if (response.ok) {
             return response.json();
-          }else{
-            console.log("Przpau")
           }
         })
         .then((data) => this.books = data)
         },
         addToLibrary(){
-          console.log(this.selected)
           for (let i = 0; i < this.selected.length ; i++) {
-            if (this.userBooks.includes(this.selected[i])){
-
-            }else{
+            if (!this.userBooks.includes(this.selected[i])){
               this.userBooks.push(this.selected[i])
               this.addBook(this.selected[i]['id'])
             }
           }
-          console.log(this.userBooks);
           alert("Książki dodane do biblioteki!")
           this.selected= [];
         },
         addBook(book_id){
-        console.log(book_id)
         url = `/addBook/${book_id}`
          
         fetch(url)
         .then((response) => {
           if (response.ok) {
             return response;
-          }else{
-            console.log("Przpau")
           }
         })
 

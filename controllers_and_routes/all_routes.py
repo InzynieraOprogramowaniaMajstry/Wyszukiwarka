@@ -88,10 +88,8 @@ def add_user():
     password = request.form['password']
     if DatabaseOperations.check_if_email_exists(email):
         flash('Użytkownik z danym mailem już istnieje!')
-        print("exists user")
         return redirect(url_for('user_bp.register'))
     else:
-        print("create new user")
         user_id = DatabaseOperations.add_user(email, password)
         resp = make_response(render_template(LIBRARY, email=email, user_id=user_id))
         resp.set_cookie('email', value=email, secure=True, httponly=True)
@@ -104,7 +102,7 @@ def get_books():
     return WolneLekturyAPI.books_list
 
 
-@user_bp.route("/addBook/<book_id>", methods=['GET','POST'])
+@user_bp.route("/addBook/<book_id>", methods=['GET'])
 def add_book(book_id):
 
     user_id = request.cookies.get('user_id')
@@ -114,14 +112,12 @@ def add_book(book_id):
         flash(NOT_LOGGED)
         return redirect(url_for(INDEX))
     else:
-        if DatabaseOperations.get_one_book(user_id=user_id,book_id=book_id):
-            print("FOUNDED BOOK FOR USER")
-        else:
+        if not DatabaseOperations.get_one_book(user_id=user_id,book_id=book_id):
             DatabaseOperations.add_book_to_library(user_id=user_id, book_id=book_id)
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 
-@user_bp.route("/readUserBook", methods=['GET','POST'])
+@user_bp.route("/readUserBook", methods=['GET'])
 def get_user_books():
 
     user_id = request.cookies.get('user_id')
@@ -132,8 +128,6 @@ def get_user_books():
         return redirect(url_for(INDEX))
     else:
         books = DatabaseOperations.get_book_from_library(user_id=user_id)
-        print(user_id)
-        print(books)
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 @user_bp.route("/fetchUserBooks")
@@ -152,7 +146,7 @@ def fetch_books():
     return my_books
     
 
-@user_bp.route("/removeBook/<book_id>", methods=['GET','POST'])
+@user_bp.route("/removeBook/<book_id>", methods=['GET'])
 def remove_book(book_id):
 
     user_id = request.cookies.get('user_id')

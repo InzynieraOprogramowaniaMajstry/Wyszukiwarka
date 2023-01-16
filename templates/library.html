@@ -129,38 +129,28 @@
         url = "https://wolnelektury.pl/api/books/"
         fetch(url)
         .then((response) => {
-          console.log(response.ok)
           if (response.ok) {
             return response.json();
-          }else{
-            console.log( "Przpau")
           }
         })
         .then((data) => this.books = data)
         .finally(this.loadingBooks=false)
         },
         addToLibrary(){
-          console.log(this.selected)
           for (let i = 0; i < this.selected.length ; i++) {
-            if (this.userBooks.includes(this.selected[i])){
-
-            }else{
+            if (!this.userBooks.includes(this.selected[i])){
               this.userBooks.push(this.selected[i])
             }
           }
-          console.log(this.userBooks)
 
         },
         removeFromLibrary(){
           for (let i = 0; i < this.selected2.length ; i++) {
             if (this.userBooks.includes(this.selected2[i])){
-              console.log(this.selected2[i]['id'])
               this.removeBook(this.selected2[i]['id'])
               this.userBooks.splice(this.selected2[i],1)
-            }else{
             }
           }
-          console.log(this.userBooks)
           this.selected2= [];
 
 
@@ -183,8 +173,6 @@
         .then((response) => {
           if (response.ok) {
             return response;
-          }else{
-            console.log("Przpau")
           }
         })
         },
@@ -196,10 +184,7 @@
         fetch(url)
         .then((response) => {
           if (response.ok) {
-            console.log("git")
             return response.json();
-          }else{
-            console.log("Przpau")
           }
         })
         .then((data) => this.userBooks = data)
