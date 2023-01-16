@@ -23,7 +23,7 @@ class TestDataseOperations(TestCase):
 
     def test_add_user(self):
         email = EMAIL
-        password = "123"
+        password = hashlib.sha512(str.encode("123")).hexdigest()
         DatabaseOperations.add_user(email, password)
 
         user_added: User = self.db.session.execute(self.db.select(User).filter_by(email=email)).scalar()
@@ -33,7 +33,7 @@ class TestDataseOperations(TestCase):
 
     def test_delete_user(self):
         email = EMAIL
-        password = "123"
+        password = hashlib.sha512(str.encode("123")).hexdigest()
         user: User = User(email=email, password=password)
         self.db.session.add(user)
         self.db.session.commit()

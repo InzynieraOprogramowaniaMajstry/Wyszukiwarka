@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 
 from models.database import User, Book
@@ -5,7 +6,8 @@ from models.database import User, Book
 
 class TestDatabase(unittest.TestCase):
     def test_user(self):
-        user = User(email="test", password="123")
+        password = hashlib.sha512(str.encode("123")).hexdigest()
+        user = User(email="test", password=password)
         self.assertEqual(user.email, "test")
         self.assertEqual(user.password, "123")
 
