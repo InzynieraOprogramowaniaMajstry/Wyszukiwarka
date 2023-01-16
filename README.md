@@ -1,49 +1,60 @@
 # Wyszukiwarka
 
-## Installation
+## Instalacja
 
-Create virtual environment
+Stworzenie wirtualnego środowiska
 ```
 python -m venv venv
 ```
 
-Active virtual environment
+Aktywowanie środowiska
 ```
 .\venv\Scripts\activate
 ```
 
-Install application dependecies
+Zainstalowanie wymaganych zależności
 ```
 pip install -r requirements.txt
 ```
 
-## Run application in terminal
+## Uruchamianie aplikacji w konsoli
 
-Active virtual environment in new terminal
+Aktywowanie środowiska w nowej konsoli
 ```
 .\venv\Scripts\activate
 ```
-
+Uruchomienie strony internetowej.
 ```
 flask run
 ```
 
-## see db inside
+## Sprawdzenie rekordów tabeli w schematach User oraz Book w VSCode
+Zainstaluj rozszerzenie SQLite ze sklepu VSCode
+Sprawdzenie User:
 ```
-install sqlite extension in vsc
-use command palette (ctrl + shift + p)
-type  >sqlite new_query
+Użyj palety (ctrl + shift + p)
+Wpisz  >sqlite new_query
 select * from user
-run file (ctrl + shift + q)
+Uruchom plik (ctrl + shift + q)
+```
+Sprawdzenie Book:
+```
+Użyj palety (ctrl + shift + p)
+Wpisz  >sqlite new_query
+select * from book
+Uruchom plik (ctrl + shift + q)
 ```
 
-## run tests
+## Uruchomienie testów
 ```
-python -m pytest -vv
+coverage run -m unittest tests/test_*
 ```
 
-## get test coverage information
+## Otrzymanie informacji z testów
 ```
-coverage run -m pytest
 coverage report
+```
+## Wygenerowanie pliku HTML z informacji o testach
+```
+coverage html
 ```
