@@ -53,7 +53,7 @@ class DatabaseOperations:
 
     @classmethod
     def get_book_from_library(cls, user_id):
-        """Remove given book from the user library"""
+        """Get books from the user library"""
         books = db.session.execute(db.select(Book).filter_by(user_id=user_id))
         return books
 
