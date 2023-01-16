@@ -40,8 +40,8 @@ def logout_user():
     """Clear user cookies and return main page"""
     flash("You have been logged out")
     resp = make_response(render_template("main.html"))
-    resp.set_cookie('email', '', expires=0, secure=True)
-    resp.set_cookie('user_id', '', expires=0, secure=True)
+    resp.set_cookie('email', '', expires=0, secure=True, httponly=True)
+    resp.set_cookie('user_id', '', expires=0, secure=True, httponly=True)
     return resp
 
 
@@ -66,8 +66,8 @@ def login_user():
     if DatabaseOperations.check_if_password_matches(email, password):
         user_id = DatabaseOperations.get_user_id(email)
         resp = make_response(render_template(LIBRARY, email=email, user_id=user_id))
-        resp.set_cookie('email', value=email, secure=True)
-        resp.set_cookie('user_id', value=str(user_id), secure=True)
+        resp.set_cookie('email', value=email, secure=True, httponly=True)
+        resp.set_cookie('user_id', value=str(user_id), secure=True, httponly=True)
         return resp
     else:
         flash('Wrong login or password')
@@ -88,6 +88,6 @@ def add_user():
         print("create new user")
         user_id = DatabaseOperations.add_user(email, password)
         resp = make_response(render_template(LIBRARY, email=email, user_id=user_id))
-        resp.set_cookie('email', value=email, secure=True)
-        resp.set_cookie('user_id', value=str(user_id), secure=True)
+        resp.set_cookie('email', value=email, secure=True, httponly=True)
+        resp.set_cookie('user_id', value=str(user_id), secure=True, httponly=True)
         return resp
