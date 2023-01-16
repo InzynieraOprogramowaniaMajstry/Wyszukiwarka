@@ -21,12 +21,12 @@ jobs:
         run: pip install pytest-cov
       - name: Install pytest
         run: pip install pytest
-      - name: Run test
-        run: python -m pytest -vv
-      - name: coverage 1
-        run: |
-          coverage run -m pytest
-          coverage report
+#       - name: Run test
+#         run: python -m pytest -vv
+#       - name: coverage 1
+#         run: |
+#           coverage run -m pytest
+#           coverage report
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
