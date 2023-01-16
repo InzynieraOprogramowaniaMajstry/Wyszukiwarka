@@ -2,7 +2,7 @@
 {% block style %}
 .marquee {
     width: 100%;
-    line-height: 50px;
+    line-height: 25px;
     color: white;
     white-space: nowrap;
     overflow: hidden;
@@ -10,7 +10,7 @@
 }
 .marquee p {
     display: inline-block;
-    top: 50%;
+    margin: 0;
     padding-left: 100%;
     animation: marquee 7s linear infinite;
 }
@@ -25,7 +25,7 @@
 
   <div class="alert alert-info" role="alert" text-align="center">
       <div class="marquee">
-          <p>Witaj w swojej bibliotece {{ email}}</p>
+          <p>Witaj w swojej bibliotece {{email}}</p>
       </div>
   </div>
 
