@@ -14,27 +14,31 @@ user_bp = Blueprint('user_bp', __name__)
 @user_bp.route("/")
 def index():
     """Return main page"""
-    return render_template("main.html")
+    user_id = request.cookies.get('user_id')
+    return render_template("main.html", user_id=user_id)
 
 
 @user_bp.route("/login")
 def login():
     """Return login page"""
-    return render_template("login.html")
+    user_id = request.cookies.get('user_id')
+    return render_template("login.html", user_id=user_id)
 
 
 @user_bp.route("/register")
 def register():
     """Return register page"""
-    return render_template("register.html")
+    user_id = request.cookies.get('user_id')
+    return render_template("register.html", user_id=user_id)
 
 
 @user_bp.route("/logout")
 def logout_user():
     """Clear user cookies and return main page"""
+    flash("You have been logged out")
     resp = make_response(render_template("main.html"))
-    resp.set_cookie('email', '')
-    resp.set_cookie('user_id', '')
+    resp.set_cookie('email', '', expires=0)
+    resp.set_cookie('user_id', '', expires=0)
     return resp
 
 
@@ -43,7 +47,11 @@ def profile():
     """Read user cookies and return library"""
     email = request.cookies.get('email')
     user_id = request.cookies.get('user_id')
-    return render_template("library.html", email=email, user_id=user_id)
+    if user_id is None:
+        flash("You are not logged in!")
+        return redirect(url_for('user_bp.index'))
+    else:
+        return render_template("library.html", email=email, user_id=user_id)
 
 
 @user_bp.route("/library", methods=['GET', 'POST'])
@@ -75,7 +83,6 @@ def add_user():
         return redirect(url_for('user_bp.register'))
     else:
         print("create new user")
-
         user_id = DatabaseOperations.add_user(email, password)
         resp = make_response(render_template("library.html"))
         resp.set_cookie('email', value=email)
