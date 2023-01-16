@@ -41,7 +41,7 @@ def register():
 @user_bp.route("/logout")
 def logout_user():
     """Clear user cookies and return main page"""
-    flash("You have been logged out")
+    flash("Zostałeś wylogowany")
     resp = make_response(render_template("main.html"))
     resp.set_cookie('email', '', expires=0, secure=True, httponly=True)
     resp.set_cookie('user_id', '', expires=0, secure=True, httponly=True)
@@ -54,7 +54,7 @@ def profile():
     email = request.cookies.get('email')
     user_id = request.cookies.get('user_id')
     if user_id is None:
-        flash("You are not logged in!")
+        flash("Nie jesteś zalogowany!")
         return redirect(url_for('user_bp.index'))
     else:
         return render_template(LIBRARY, email=email, user_id=user_id)
@@ -74,7 +74,7 @@ def login_user():
         resp.set_cookie('user_id', value=str(user_id), secure=True, httponly=True)
         return resp
     else:
-        flash('Wrong login or password')
+        flash('Zły login lub hasło')
         return redirect(url_for('user_bp.login'))
 
 
@@ -85,7 +85,7 @@ def add_user():
     email = request.form['login']
     password = request.form['password']
     if DatabaseOperations.check_if_email_exists(email):
-        flash('User with given email already exists')
+        flash('Użytkownik z danym mailem już istnieje!')
         print("exists user")
         return redirect(url_for('user_bp.register'))
     else:
@@ -109,7 +109,7 @@ def add_book(book_id):
     email = request.cookies.get('email')
 
     if user_id is None:
-        flash("You are not logged in!")
+        flash("Nie jesteś zalogowany!")
         return redirect(url_for('user_bp.index'))
     else:
         if DatabaseOperations.get_one_book(user_id=user_id,book_id=book_id):
@@ -126,7 +126,7 @@ def get_user_books():
     email = request.cookies.get('email')
 
     if user_id is None:
-        flash("You are not logged in!")
+        flash("Nie jesteś zalogowany!")
         return redirect(url_for('user_bp.index'))
     else:
         books = DatabaseOperations.get_book_from_library(user_id=user_id)
@@ -139,7 +139,7 @@ def gooo():
 
     user_id = request.cookies.get('user_id')
     if user_id is None:
-        flash("You are not logged in!")
+        flash("Nie jesteś zalogowany!")
         return redirect(url_for('user_bp.index'))
 
     books = DatabaseOperations.get_book_from_library(user_id)
@@ -157,7 +157,7 @@ def removeBook(book_id):
     email = request.cookies.get('email')
 
     if user_id is None:
-        flash("You are not logged in!")
+        flash("Nie jesteś zalogowany!")
         return redirect(url_for('user_bp.index'))
     else:
         DatabaseOperations.remove_book_from_library(user_id=user_id, book_id=book_id)
