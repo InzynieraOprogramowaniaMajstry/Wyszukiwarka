@@ -112,7 +112,10 @@ def add_book(book_id):
         flash("You are not logged in!")
         return redirect(url_for('user_bp.index'))
     else:
-        DatabaseOperations.add_book_to_library(user_id=user_id, book_id=book_id)
+        if DatabaseOperations.get_one_book(user_id=user_id,book_id=book_id):
+            print("FOUNDED BOOK FOR USER")
+        else:
+            DatabaseOperations.add_book_to_library(user_id=user_id, book_id=book_id)
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 
@@ -140,31 +143,10 @@ def gooo():
         return redirect(url_for('user_bp.index'))
 
     books = DatabaseOperations.get_book_from_library(user_id)
-    print(books[0][0].book_id)
     books_id = [book[0].book_id for book in books]
-    print(books_id)
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-    print("===================================")
-
-
+ 
     all_books = WolneLekturyAPI.books_list
-    # my_books =all_books.filter()
     my_books = list(filter(lambda c: c['id'] in books_id, all_books))
-    print(my_books)
     return my_books
     
 

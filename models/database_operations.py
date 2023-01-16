@@ -58,6 +58,12 @@ class DatabaseOperations:
         return books
 
     @classmethod
+    def get_one_book(cls, user_id, book_id):
+        """Get books from the user library"""
+        book = db.session.execute(db.select(Book).filter_by(user_id=user_id, book_id=book_id)).scalar()
+        return book
+
+    @classmethod
     def check_if_email_exists(cls, email):
         """Check if given email already exists in the database"""
         try:

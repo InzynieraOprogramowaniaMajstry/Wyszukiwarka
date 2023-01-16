@@ -32,8 +32,6 @@
   <v-app>
       <v-main>
 
-        <v-btn  @click="getBooksFromDb"  rounded block class="m-3" color="info" > Load your books from database </v-btn>
-
             <template  v-if="userBooks.length > 0">
               <v-card>
                 <v-card-title>
@@ -75,7 +73,7 @@
             </v-card>
 
 
-            <v-btn  @click="removeFromLibrary"  rounded block class="m-3" color="info" > Remove selected books from database </v-btn>
+            <v-btn  v-if="selected2.length > 0" @click="removeFromLibrary"  rounded block class="m-3" color="error" > Remove selected books from database </v-btn>
 
 
         </template>
@@ -119,7 +117,8 @@
         }
       } ,
         mounted:function(){
-          this.fetchBooks()
+          this.fetchBooks(),
+          this.getBooksFromDb()
         },
         methods:{
         fetchBooks(){
@@ -152,12 +151,26 @@
           for (let i = 0; i < this.selected2.length ; i++) {
             if (this.userBooks.includes(this.selected2[i])){
               console.log(this.selected2[i]['id'])
+              this.removeBook(this.selected2[i]['id'])
               this.userBooks.splice(this.selected2[i],1)
             }else{
             }
           }
           console.log(this.userBooks)
           this.selected2= [];
+
+
+          // sleep time expects milliseconds
+          function sleep (time) {
+            return new Promise((resolve) => setTimeout(resolve, time));
+          }
+
+          // Usage!
+          sleep(1000).then(() => {
+              // Do something after the sleep!
+              this.getBooksFromDb()
+          });
+
         },
         removeBook(book_id){
         url = `/removeBook/${book_id}`
