@@ -125,7 +125,9 @@
               this.addBook(this.selected[i]['id'])
             }
           }
-          console.log(this.userBooks)
+          console.log(this.userBooks);
+          alert("Książki dodane do biblioteki!")
+          this.selected= [];
         },
         addBook(book_id){
         console.log(book_id)
@@ -141,19 +143,6 @@
         })
 
         },
-      
-        
-
-        removeFromLibrary(){
-          for (let i = 0; i < this.selected2.length ; i++) {
-            if (this.userBooks.includes(this.selected2[i])){
-              this.userBooks.splice(this.selected2[i],1)
-            }else{
-            }
-          }
-          console.log(this.userBooks)
-          this.selected2= [];
-        }
       }
     })
 </script>
