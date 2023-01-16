@@ -72,8 +72,6 @@
         return {
           dialog: false,
 
-
-
           userBooks: [],
           search: "",
           mySearch: "",
@@ -82,7 +80,7 @@
           selected: [],
           selected2: [],
           books:[],
-          loadingBooks:false,
+          
             headers: [
           {
             text: 'Rodzaj literacki',
@@ -113,7 +111,6 @@
           }
         })
         .then((data) => this.books = data)
-        .finally(this.loadingBooks=false)
         },
         addToLibrary(){
           console.log(this.selected)
@@ -122,10 +119,12 @@
 
             }else{
               this.userBooks.push(this.selected[i])
-              fetchX()
+              this.addBook(this.selected[i]['slug'])
             }
           }
           console.log(this.userBooks)
+
+          this.readUserBooks()
 
         },
         removeFromLibrary(){
@@ -137,7 +136,32 @@
           }
           console.log(this.userBooks)
           this.selected2= [];
-        }
+        },
+        addBook(bookid){
+          url = `/addBook/${bookid}`
+          fetch(url)
+          .then((response) => {
+            console.log(response.ok)
+            if (response.ok) {
+              return response.json();
+            }else{
+              console.log( "Przpau")
+            }
+          })
+        },
+        readUserBooks(){
+          url = "/readUserBook"
+          fetch(url)
+          .then((response) => {
+            console.log(response.ok)
+            if (response.ok) {
+              return response.json();
+            }else{
+              console.log( "Przpau")
+            }
+          })
+          
+          }
       }
     })
 </script>

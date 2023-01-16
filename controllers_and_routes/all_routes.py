@@ -93,7 +93,7 @@ def add_user():
         return resp
 
 
-@user_bp.route("/addBook", methods=['POST'])
+@user_bp.route("/addBook", methods=['GET','POST'])
 def add_book(book_id):
 
     user_id = request.cookies.get('user_id')
@@ -107,14 +107,17 @@ def add_book(book_id):
         return render_template(LIBRARY, email=email, user_id=user_id)
 
 
-@user_bp.route("/readUserBook", methods=['GET'])
+@user_bp.route("/readUserBook", methods=['GET','POST'])
 def get_user_books():
 
     user_id = request.cookies.get('user_id')
+    email = request.cookies.get('email')
 
     if user_id is None:
         flash("You are not logged in!")
         return redirect(url_for('user_bp.index'))
     else:
-        DatabaseOperations.(user_id=user_id, book_id=book_id)
+        books = DatabaseOperations.get_book_from_library(user_id=user_id)
+        print(user_id)
+        print(books)
         return render_template(LIBRARY, email=email, user_id=user_id)
