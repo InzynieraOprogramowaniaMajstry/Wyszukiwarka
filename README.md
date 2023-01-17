@@ -45,6 +45,13 @@ select * from book
 Uruchom plik (ctrl + shift + q)
 ```
 
+## Sprawdzenie rekordów tabeli w schematach User oraz Book w PyCharm
+Dwa razy nacisnij na database.db
+
+Zaakceptuj połączenie z SQLite
+
+Z panelu bocznego `Database` można wejść w `database -> main -> tables -> book/user -> keys -> key #1` aby zobaczyć wszystkie rekordy w danym schemacie.
+
 ## Uruchomienie testów
 ```
 coverage run -m unittest tests/test_*
