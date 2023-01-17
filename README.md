@@ -65,3 +65,25 @@ coverage report
 ```
 coverage html
 ```
+## Dokumentacja użytkownika
+Plik `dokumantacja_użytkownika.pdf`
+
+## Dokumentacja techniczna
+Plik `dokumantacja_techniczna.pdf`
+
+## Pokrycie testami
+```
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+config.py                                         5      0   100%
+initialize_objects.py                            16      0   100%
+models/database.py                               15      0   100%
+models/database_operations.py                    63      0   100%
+models/wolne_lektury_api.py                      59      0   100%
+tests/test_database.py                           13      0   100%
+tests/test_database_operations.py               104      0   100%
+tests/test_wolne_lektury_api.py                  32      0   100%
+tests/test_wolne_lektury_api_no_internet.py      37      0   100%
+---------------------------------------------------------------------------
+TOTAL                                           344      0   100%
+```
