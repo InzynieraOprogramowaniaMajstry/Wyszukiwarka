@@ -69,7 +69,7 @@ coverage html
 Plik `dokumentacja_użytkownika.pdf`
 
 ## Dokumentacja techniczna
-Plik `dokumantacja_techniczna.pdf`
+Plik `dokumentacja_techniczna.pdf`
 
 ## Pokrycie testami
 ```
@@ -89,6 +89,8 @@ TOTAL                                           344      0   100%
 ```
 ## Przepuszczenie kodu przez SonarCloud
 Dostęp do SonarCloud jest przyznawany po dołączeniu do organizacji.
-![sonar](https://user-images.githubusercontent.com/47687092/212783089-7e4fe170-d26a-4cd6-98f5-a845e94a250d.png)
+
+<img width="630" alt="sonar" src="https://user-images.githubusercontent.com/92488733/212785676-e5f8c6c2-7622-4d6c-b86d-07904187a705.png">
+
 (Mimo wielu wysiłku nie udało się włączyć pokrycia testami z `coverage` do SonarCloudu)
 
