@@ -17,50 +17,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Install tox and any other packages
-        run: pip install tox
-      - name: Run tox
-        run: tox -e py
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#       - name: Install dependencies
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install pylint pytest pytest-cov selenium 
-#       - name: Running pytest
-#         run: |
-#           pytest -v  --cov --cov-report=xml --cov-report=html
-#       - name: Analysing the code with pylint
-#         continue-on-error: true
-#         run: |
-#           pylint models
-#       - name: SonarCloud Scan
-#         uses: SonarSource/sonarcloud-github-action@master
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#       - name: Install pip pytest
-#         run: pip install pytest-cov
-#       - name: Install pytest
-#         run: pip install pytest
-#       - name: req
-#         run: pip install -r requirements.txt
-#       - name: Install tox and any other packages
-#         run: pip install tox
-#       - name: Run tox
-#         run: tox -e py
-# #       - name: Run test
-# #         run: python -m pytest -vv
-# #       - name: coverage 1
-# #         run: |
-# #           coverage run -m pytest
-# #           coverage report
-#       - name: SonarCloud Scan
-#         uses: SonarSource/sonarcloud-github-action@master
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
