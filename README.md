@@ -92,5 +92,5 @@ Dostęp do SonarCloud jest przyznawany po dołączeniu do organizacji.
 
 <img width="630" alt="sonar" src="https://user-images.githubusercontent.com/92488733/212785676-e5f8c6c2-7622-4d6c-b86d-07904187a705.png">
 
-(Mimo wielu wysiłku nie udało się włączyć pokrycia testami z `coverage` do SonarCloudu)
+(Mimo wielkiego wysiłku nie udało się włączyć pokrycia testami z `coverage` do SonarCloudu)
 
