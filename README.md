@@ -66,7 +66,7 @@ coverage report
 coverage html
 ```
 ## Dokumentacja użytkownika
-Plik `dokumantacja_użytkownika.pdf`
+Plik `dokumentacja_użytkownika.pdf`
 
 ## Dokumentacja techniczna
 Plik `dokumantacja_techniczna.pdf`
@@ -88,5 +88,7 @@ tests/test_wolne_lektury_api_no_internet.py      37      0   100%
 TOTAL                                           344      0   100%
 ```
 ## Przepuszczenie kodu przez SonarCloud
+Dostęp do SonarCloud jest przyznawany po dołączeniu do organizacji.
 ![sonar](https://user-images.githubusercontent.com/47687092/212783089-7e4fe170-d26a-4cd6-98f5-a845e94a250d.png)
 (Mimo wielu wysiłku nie udało się włączyć pokrycia testami z `coverage` do SonarCloudu)
+
